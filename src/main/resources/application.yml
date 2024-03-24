@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    username: root
+    password: rootroot
+    url: jdbc:mysql://localhost:3306/blog2?&characterEncoding=utf-8&userSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    com.duzjstu: debug
