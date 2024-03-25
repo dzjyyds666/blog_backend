@@ -16,13 +16,13 @@ public class CodeGenerator {
         String password = "rootroot";
         String outputUrl = "/Users/zhijundu/code/IdeaProjects/blogFinalVersion/src/main/java/";
         String mapperLocation = "/Users/zhijundu/code/IdeaProjects/blogFinalVersion/src/main/resources/mapper/";
-        String tables = "blog,btcontact,comments,messageboards,settings,type,user";
+        String tables = "tokenblacklist";
 
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("Aaron") // 设置作者
                             //.enableSwagger() // 开启 swagger 模式
-                            .fileOverride() // 覆盖已生成文件
+                            //.fileOverride() // 覆盖已生成文件
                             .outputDir(outputUrl); // 指定输出目录
                 })
                 .dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
