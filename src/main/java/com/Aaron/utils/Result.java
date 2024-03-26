@@ -42,12 +42,12 @@ public class Result {
     }
 
     public static Result fail(String message){
-        return new Result(200,message,null,null);
+        return new Result(201,message,null,null);
     }
     public static Result fail(Integer code){
         return new Result(code,"fail",null,null);
     }
     public static Result fail(){
-        return new Result(200,"fail",null,null);
+        return new Result(201,"fail",null,null);
     }
 }

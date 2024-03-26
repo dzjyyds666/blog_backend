@@ -47,7 +47,7 @@ class BlogFinalVersionApplicationTests {
 
     @Test
     void jwtIsTrue(){
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiMjUyOTYxOTAzNiIsImV4cCI6MTcxMTM2ODgzMH0.V3AkY2wHHFxBNR0WR0M1OGwXthT7EvpRsFNDHMgG7gM";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiMjUyOTYxOTAzNiIsImV4cCI6MTcxMTY5MTQ1Mn0.WK3fJFEuk82VUDpsp0_y3R-fLs5DUG7qfaRcMQbs4Ao";
         System.out.println(tokenblacklistService.tokenIsEffective(token));
     }
 

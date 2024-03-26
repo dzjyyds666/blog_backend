@@ -16,4 +16,7 @@ public interface IUserService extends IService<User> {
     String login(User user);
 
     void logout(String token);
+
+    User getUserInfo();
+
 }

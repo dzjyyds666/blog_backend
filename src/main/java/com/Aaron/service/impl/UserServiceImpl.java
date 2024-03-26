@@ -8,6 +8,7 @@ import com.Aaron.utils.JwtToken;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 
 /**
@@ -29,7 +30,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public String login(User user) {
-        //  先与数据库中的数据比对，判断是否为真
+
+        //先对密码进行md5加密处理
+        String md5 = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+        user.setPassword(md5);
+
+        //  与数据库中的数据比对，判断是否为真
         User info = userMapper.selectById(1);
         //  如果与数据库中的数据一致，则生成jwt token 返回给前端
         if (info.getAccount().equals(user.getAccount()) && info.getPassword().equals(user.getPassword())) {
@@ -43,5 +49,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void logout(String token) {
         tokenblacklistMapper.insertToken(token);
+    }
+
+    @Override
+    public User getUserInfo() {
+        return userMapper.selectById(1);
     }
 }
