@@ -1,6 +1,5 @@
 package com.Aaron;
 
-import com.Aaron.service.ITokenblacklistService;
 import io.jsonwebtoken.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,7 @@ import java.util.Date;
 @SpringBootTest
 class BlogFinalVersionApplicationTests {
 
-    @Autowired
-    private ITokenblacklistService tokenblacklistService;
+
 
     @Test
     void contextLoads() {
@@ -45,11 +43,7 @@ class BlogFinalVersionApplicationTests {
         System.out.println(jwtToken);
     }
 
-    @Test
-    void jwtIsTrue(){
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiMjUyOTYxOTAzNiIsImV4cCI6MTcxMTY5MTQ1Mn0.WK3fJFEuk82VUDpsp0_y3R-fLs5DUG7qfaRcMQbs4Ao";
-        System.out.println(tokenblacklistService.tokenIsEffective(token));
-    }
+
 
 
     @Test

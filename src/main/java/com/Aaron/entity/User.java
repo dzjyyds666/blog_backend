@@ -55,7 +55,7 @@ public class User implements Serializable {
     /**
      * 权限
      */
-    private String authority;
+    private String token;
 
     /**
      * 简介
