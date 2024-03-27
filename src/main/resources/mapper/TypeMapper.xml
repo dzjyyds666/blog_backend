@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.mapper.TypeMapper">
+    <update id="reduceTypeNumber">
+        update blog2.type
+        set blog_num = blog_num - 1
+        where id in (select type_id from blog2.btcontact where blog_id = #{id});
+    </update>
 
+    <select id="getTypeInfo" resultType="com.Aaron.entity.Type">
+        select * from blog2.type;
+    </select>
+    <insert id="getAddType">
+        insert into blog2.type(type_name) value (#{typeName});
+    </insert>
+    <update id="getChangeTypeName">
+        update blog2.type
+        set type_name = #{typeName}
+        where id = #{id};
+    </update>
 </mapper>

@@ -1,14 +1,18 @@
 package com.Aaron.service.impl;
 
 import com.Aaron.entity.User;
-import com.Aaron.mapper.TokenblacklistMapper;
 import com.Aaron.mapper.UserMapper;
 import com.Aaron.service.IUserService;
 import com.Aaron.utils.JwtToken;
+import com.Aaron.utils.MyRedis;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.util.Objects;
 
 
 /**
@@ -26,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Autowired
-    private TokenblacklistMapper tokenblacklistMapper;
+    private MyRedis myRedis;
 
     @Override
     public String login(User user) {
@@ -37,10 +41,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //  与数据库中的数据比对，判断是否为真
         User info = userMapper.selectById(1);
-        //  如果与数据库中的数据一致，则生成jwt token 返回给前端
+        //  如果与数据库中的数据一致，则生成jwt token 返回给前端 并把token存入redis
         if (info.getAccount().equals(user.getAccount()) && info.getPassword().equals(user.getPassword())) {
             JwtToken jwtToken = new JwtToken();
-            return jwtToken.createJwt(user.getAccount());
+            String token = jwtToken.createJwt(user.getAccount());
+            myRedis.setValue(info.getAccount()+" token",token);
+            return token;
         }else{
             return null;
         }
@@ -48,11 +54,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public void logout(String token) {
-        tokenblacklistMapper.insertToken(token);
+        Claims claims = Jwts.parser().setSigningKey("Aaron").parseClaimsJws(token).getBody();
+        myRedis.deleteKey(claims.get("account").toString()+" token");
     }
 
     @Override
     public User getUserInfo() {
         return userMapper.selectById(1);
+    }
+
+    @Override
+    public void postEditInfo(User user) {
+
+        String password = userMapper.getPassword(user.getAccount());
+
+        if(!Objects.equals(password,user.getPassword())){
+            //密码被修改 对密码进行md5加密
+            user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+        }
+        userMapper.postEditInfo(user);
     }
 }

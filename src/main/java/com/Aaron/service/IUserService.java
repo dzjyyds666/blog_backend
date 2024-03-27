@@ -19,4 +19,5 @@ public interface IUserService extends IService<User> {
 
     User getUserInfo();
 
+    void postEditInfo(User user);
 }

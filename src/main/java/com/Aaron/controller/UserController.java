@@ -4,11 +4,10 @@ import com.Aaron.entity.User;
 import com.Aaron.service.IUserService;
 import com.Aaron.utils.JwtToken;
 import com.Aaron.utils.Result;
-import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 /**
  * <p>
@@ -19,7 +18,7 @@ import java.util.Objects;
  * @since 2024-03-23
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/admin")
 public class UserController {
 
     @Autowired
@@ -28,42 +27,40 @@ public class UserController {
     @Autowired
     private JwtToken jwtToken;
 
+
     @PostMapping("/login")
-    public Result Login(@RequestBody User user) {
+    public ResponseEntity<String> Login(@RequestBody User user) {
         String token = userService.login(user);
         if (token == null) {
             //账号或密码错误
-            return Result.fail("账号或密码错误，请重新输入");
+            return ResponseEntity.status(201)
+                    .body("账号或密码错误");
         }
-        return Result.Success("登录成功", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("new-token", token);
+        System.out.println(token);
+        return ResponseEntity.status(200)
+                .headers(httpHeaders)
+                .body(token);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public Result Logout(@RequestHeader("Authorization") String token) {
-
-        userService.logout(token);
+        String token1 = jwtToken.dealWithToken(token);
+        userService.logout(token1);
         return Result.Success("注销成功", null);
     }
 
     @GetMapping("/getInfo")
-    public Result getUserInfo(@RequestHeader("Authorization") String token){
-
-        System.out.println(token);
-
-        token = jwtToken.dealWithToken(token);
-
-        System.out.println(token);
-        String JwtToken = jwtToken.parseToken(token);
-        if(Objects.equals(JwtToken, "true")) {
-            User user = userService.getUserInfo();
-            return Result.Success(null, user);
-        } else if (Objects.equals(JwtToken,"false")) {
-            return Result.fail(201, "token过期，请重新登录", null);
-        }else{
-            User user = userService.getUserInfo();
-            return Result.Success(JwtToken,user);
-        }
+    public Result getUserInfo() {
+        User userInfo = userService.getUserInfo();
+        return Result.Success(userInfo);
     }
 
-
+    @PostMapping("/editinfo")
+    public Result postEditInfo(@RequestBody User user) {
+        userService.postEditInfo(user);
+        return Result.Success("修改成功");
+    }
 }
+

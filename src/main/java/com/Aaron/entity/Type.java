@@ -2,6 +2,11 @@ package com.Aaron.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,6 +18,9 @@ import java.time.LocalDateTime;
  * @author Aaron
  * @since 2024-03-23
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Type implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,77 +42,16 @@ public class Type implements Serializable {
     private Integer blogNum;
 
     /**
-     * 分类简介
-     */
-    private String synopsis;
-
-    /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updateTime;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public Integer getBlogNum() {
-        return blogNum;
-    }
-
-    public void setBlogNum(Integer blogNum) {
-        this.blogNum = blogNum;
-    }
-
-    public String getSynopsis() {
-        return synopsis;
-    }
-
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Type{" +
-            "id = " + id +
-            ", typeName = " + typeName +
-            ", blogNum = " + blogNum +
-            ", synopsis = " + synopsis +
-            ", createTime = " + createTime +
-            ", updateTime = " + updateTime +
-        "}";
-    }
 }

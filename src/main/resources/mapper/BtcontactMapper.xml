@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.mapper.BtcontactMapper">
 
+    <delete id="deleteByBlogId">
+        delete from blog2.btcontact where blog_id = #{id};
+    </delete>
+    <delete id="deleteByTypeId">
+        delete from blog2.btcontact where type_id = #{id}
+    </delete>
+    <select id="selectBlogIdByTypeId" resultType="java.lang.Integer">
+        select blog_id from blog2.btcontact
+        where type_id = #{id}
+    </select>
+    <select id="selectTypeIdByBlogId" resultType="java.lang.Integer">
+        select type_id from blog2.btcontact
+        where  blog_id = #{id}
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ package com.Aaron.utils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpHeaders;
 
 @Data
 @AllArgsConstructor
@@ -12,42 +13,36 @@ public class Result {
 
     private Integer code;
     private String message;
-    private String token;
     private Object data;
 
-
-    public static Result Success(Integer code, String message,String token ,Object data){
-        return new Result (code,message,token,data);
+    public static Result Success(Integer code,String message,Object data){
+        return new Result(code,message,data);
     }
-    public static Result Success(String message,String token, Object data){
-        return new Result(200,message,token,data);
+    public static Result Success(String message,Object data){
+        return new Result(200,message,data);
     }
-
-    public static Result Success(String message,String token){
-        return new Result(200,message,token,null);
+    public static Result Success(Object data){
+        return new Result(200,"success",data);
     }
-
-    public static Result Success(String token,Object data){
-        return new Result(200,"success",token,data);
+    public static Result Success(){
+        return new Result(200,"success",null);
     }
-    public static Result Success(Integer code,String message,String token){return new Result(code,message,token,null);}
-    public static Result Success(String token){
-        return new Result(200,"success",token,null);
+    public static Result Success(String message){
+        return new Result(200,message,null);
     }
+    public static Result Success(Integer code,Object data){return new Result(code,"success",data);}
 
-    public static Result Success(Integer code,String token ,Object data){return new Result(code,"success",token,data);}
-
-    public static Result fail(Integer code, String message,String token){
-        return new Result(code,message,token,null);
+    public static Result fail(Integer code,String message){
+        return new Result(code,message,null);
     }
 
     public static Result fail(String message){
-        return new Result(201,message,null,null);
+        return new Result(200,message,null);
     }
     public static Result fail(Integer code){
-        return new Result(code,"fail",null,null);
+        return new Result(code,"fail",null);
     }
     public static Result fail(){
-        return new Result(201,"fail",null,null);
+        return new Result(200,"fail",null);
     }
 }

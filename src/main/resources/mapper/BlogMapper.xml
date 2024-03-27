@@ -2,4 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.mapper.BlogMapper">
 
+    <resultMap id="adminBlogInfo" type="com.Aaron.entity.Blog">
+        <id property="id" column="id"/>
+        <result property="title" column="title" />
+        <result property="tag" column="tag" />
+        <result property="content" column="content" />
+        <result property="firstImg" column="first_img" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="status" column="status" />
+        <collection property="typeList"  ofType="com.Aaron.entity.Type">
+            <id property="id" column="type_id" />
+            <result property="typeName" column="type_name" />
+        </collection>
+    </resultMap>
+    <update id="editBlog">
+        update blog2.blog
+        set title = #{title},tag = #{tag},content = #{content},first_img = #{firstImg},status = #{status}
+        where id = #{id};
+    </update>
+
+    <select id="getBlogInfo" resultMap="adminBlogInfo">
+        select blog.id,title,tag,status,type_name,blog.create_time,blog.update_time
+        from blog2.blog,blog2.type,blog2.btcontact
+        where blog.id = btcontact.blog_id and type.id = btcontact.type_id
+        order by blog.create_time desc;
+    </select>
+    <select id="getgetBlogById" resultMap="adminBlogInfo">
+        select blog.id,title,first_img,tag,type_name,content,status
+        from blog2.blog,blog2.btcontact,blog2.type
+        where blog.id = btcontact.blog_id and type.id = btcontact.type_id and blog.id = #{id};
+    </select>
 </mapper>

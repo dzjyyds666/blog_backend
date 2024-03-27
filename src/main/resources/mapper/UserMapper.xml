@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.mapper.UserMapper">
 
+    <update id="postEditInfo">
+        update blog2.user
+        set nickname = #{nickname},account = #{account},password = #{password},avatar = #{avatar},introduction = #{introduction},email = #{email}
+        where id = #{id};
+    </update>
+    <select id="getPassword" resultType="java.lang.String">
+        select password from blog2.user where account = #{account};
+    </select>
 </mapper>
