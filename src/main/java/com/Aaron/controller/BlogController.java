@@ -32,7 +32,6 @@ public class BlogController {
 
     @PostMapping("/deleteBlog")
     public Result deleteBlog(@RequestBody List<Blog> blogList) {
-        System.out.println(blogList);
         String message = blogService.deleteBlog(blogList);
         return Result.Success(message);
     }
@@ -55,7 +54,6 @@ public class BlogController {
     public Result postSelectBlog(@RequestBody Blog blog){
 
         List<Blog> list = blogService.postSelectBlog(blog);
-
         return Result.Success(list);
     }
 }
