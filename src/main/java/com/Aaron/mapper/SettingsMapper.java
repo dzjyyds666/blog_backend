@@ -13,4 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SettingsMapper extends BaseMapper<Settings> {
 
+    void postEdit(Settings settings);
+
+    String getContent(String name);
 }

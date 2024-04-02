@@ -77,7 +77,7 @@ public class TypeServiceImpl extends ServiceImpl<TypeMapper, Type> implements IT
             //删除分类要把分类下的博客全部删除，如果一个博客属于多个分类，则不删除该博客
             for(Type type:typeList){
                 //先查询该分类下的博客id
-                List<Integer> blogIdList = btcontactMapper.selectBlogIdByTypeId(type.getId());
+                List<Integer> blogIdList = btcontactMapper.selectBlogIdByTypeId(type.getTypeId());
                 //在查看每个博客对应的分类数目
                 for(Integer id:blogIdList){
                     List<Integer> typeIdList = btcontactMapper.selectTypeIdByBlogId(id);
@@ -90,14 +90,24 @@ public class TypeServiceImpl extends ServiceImpl<TypeMapper, Type> implements IT
                     }
                 }
                 //删除btconnect中的typeId信息
-                btcontactMapper.deleteByTypeId(type.getId());
+                btcontactMapper.deleteByTypeId(type.getTypeId());
 
                 //最后删除该分类
-                typeMapper.deleteById(type.getId());
+                typeMapper.deleteById(type.getTypeId());
             }
             return "删除成功";
         }catch (Exception e){
             return "删除失败";
         }
+    }
+
+    @Override
+    public List<Type> getSearch(String search) {
+        return typeMapper.getSearch(search);
+    }
+
+    @Override
+    public Type getTYpeById(Integer id) {
+        return typeMapper.selectById(id);
     }
 }

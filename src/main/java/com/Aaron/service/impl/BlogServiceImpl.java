@@ -1,18 +1,18 @@
 package com.Aaron.service.impl;
 
 import com.Aaron.entity.Blog;
+import com.Aaron.entity.Btcontact;
 import com.Aaron.mapper.BlogMapper;
 import com.Aaron.mapper.BtcontactMapper;
 import com.Aaron.mapper.TypeMapper;
 import com.Aaron.service.IBlogService;
+import com.Aaron.utils.Year;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * <p>
@@ -36,8 +36,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
 
     @Override
     public List<Blog> getBlogInfo() {
-        List<Blog> list = blogMapper.getBlogInfo();
-        return list;
+        return blogMapper.getBlogInfo();
     }
 
     @Override
@@ -73,21 +72,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     public List<Blog> postSelectBlog(Blog blog) {
 
         //TODO 迭代器
-//        List<Blog> list = blogMapper.getBlogInfo();
-//        Iterator<Blog> iterator = list.iterator();
-//        while (iterator.hasNext()) {
-//            Blog blog1 = iterator.next();
-//            if (blog.getTitle() != null && !blog1.getTitle().contains(blog.getTitle())) {
-//                iterator.remove();
-//            }
-//            if (blog.getStatus() != null && !Objects.equals(blog.getStatus(), blog1.getStatus())) {
-//                iterator.remove();
-//            }
-//            if (blog.getTag() != null && !Objects.equals(blog.getTag(), blog1.getTag())) {
-//                iterator.remove();
-//            }
-//        }
-//        return list;
 
         List<Blog> list = blogMapper.getBlogInfo();
         List<Blog> list1 = new ArrayList<>();
@@ -111,6 +95,117 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         }
 
         return list1;
+    }
+
+    @Override
+    public String postAddBlog(Blog blog) {
+        try {
+            //先插入博客数据
+            blogMapper.postAddBlog(blog);
+            //查询博客id
+            Integer id = blogMapper.selectNewBlog(blog.getTitle());
+            //在btconnect中插入博客与分类的关系
+            for (String typeName : blog.getTypeNameList()) {
+                //在type中获取type_id
+                Integer typeId = typeMapper.selectIdByName(typeName);
+                Btcontact btcontact = new Btcontact(null, id, typeId);
+                btcontactMapper.insert(btcontact);
+                //修改blog_number
+                typeMapper.addTypeBlogNumber(typeId);
+            }
+            return "添加成功";
+        } catch (Exception e) {
+            return "文章标题重复";
+        }
+    }
+
+    @Override
+    public List<Blog> getBlogInfoPage(Integer offset, Integer limit) {
+        List<Blog> list1 = new ArrayList<>();
+        try {
+            List<Blog> list = blogMapper.getBlogInfo();
+            int start = (offset - 1) * limit;
+            for (int i = 0; i < start + limit; i++) {
+                if (i >= start) {
+                    if (list.get(i) != null) {
+                        list1.add(list.get(i));
+                    }
+                }
+            }
+            return list1;
+        } catch (Exception e) {
+            return list1;
+        }
+    }
+
+    @Override
+    public Integer getBlogNum() {
+        return blogMapper.getBlogNum();
+    }
+
+    @Override
+    public List<Blog> getSearch(String search) {
+
+        return blogMapper.getSearch(search);
+
+    }
+
+    @Override
+    public List<Year> getArchive() {
+        List<LocalDateTime> year = blogMapper.getYear();
+        List<Integer> list = new ArrayList<>();
+        for (LocalDateTime time : year) {
+            if (!list.contains(time.getYear())) {
+                list.add(time.getYear());
+            }
+        }
+
+        Comparator<Integer> reverseOrder = Collections.reverseOrder();
+        list.sort(reverseOrder);
+        List<Year> list1 = new ArrayList<>();
+
+        for (Integer y : list) {
+            int number = 0;
+            for (LocalDateTime time : year) {
+                if (time.getYear() == y) {
+                    number++;
+                }
+            }
+            Year newYear = new Year(y, number);
+            list1.add(newYear);
+        }
+
+        return list1;
+    }
+
+    @Override
+    public List<Blog> getArchiveBlog() {
+
+        return blogMapper.getblog();
+    }
+
+    @Override
+    public Blog getBlogDetail(Integer id) {
+        return blogMapper.getBlogDetail(id);
+    }
+
+    @Override
+    public List<Blog> getByTypeId(Integer id, Integer current, Integer pagesize) {
+        int start = (current - 1) * pagesize;
+        List<Blog> list = blogMapper.getByTypeId(id);
+        List<Blog> list1 = new ArrayList<>();
+        try {
+            for (int i = 0; i < start + pagesize; i++) {
+                if (i >= start) {
+                    if (list.get(i) != null) {
+                        list1.add(list.get(i));
+                    }
+                }
+            }
+            return list1;
+        } catch (Exception e) {
+            return list1;
+        }
     }
 
 

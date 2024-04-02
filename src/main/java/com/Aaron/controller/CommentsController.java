@@ -1,7 +1,12 @@
 package com.Aaron.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
+import com.Aaron.entity.Comments;
+import com.Aaron.service.ICommentsService;
+import com.Aaron.utils.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,8 +16,26 @@ import org.springframework.stereotype.Controller;
  * @author Aaron
  * @since 2024-03-23
  */
-@Controller
+@RestController
 @RequestMapping("/comments")
 public class CommentsController {
+
+    @Autowired
+    private ICommentsService commentsService;
+
+    @PostMapping("/front/addComment")
+    public Result postAddComment(@RequestBody Comments comments){
+        String message = commentsService.postAddComment(comments);
+        if(message.contains("失败")){
+            return Result.fail(201,message);
+        }
+        return Result.Success(200,message,null);
+    }
+
+    @GetMapping("/front/getComment")
+    public Result getCommentById(int id){
+        List<Comments> comments = commentsService.getComment(id);
+        return Result.Success(comments);
+    }
 
 }

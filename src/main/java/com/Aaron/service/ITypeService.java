@@ -24,4 +24,8 @@ public interface ITypeService extends IService<Type> {
     String getAddType(String typeName);
 
     String postDeleteType(List<Type> typeList);
+
+    List<Type> getSearch(String search);
+
+    Type getTYpeById(Integer id);
 }

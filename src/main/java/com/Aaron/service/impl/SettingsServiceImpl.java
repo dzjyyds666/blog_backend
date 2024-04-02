@@ -4,6 +4,7 @@ import com.Aaron.entity.Settings;
 import com.Aaron.mapper.SettingsMapper;
 import com.Aaron.service.ISettingsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +17,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SettingsServiceImpl extends ServiceImpl<SettingsMapper, Settings> implements ISettingsService {
+
+    @Autowired
+    private SettingsMapper settingsMapper;
+
+
+    @Override
+    public void postEdit(Settings settings) {
+        settingsMapper.postEdit(settings);
+    }
+
+    @Override
+    public String getContent(String name) {
+
+        return settingsMapper.getContent(name);
+    }
+
 
 }

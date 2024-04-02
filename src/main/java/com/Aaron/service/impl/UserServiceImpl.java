@@ -74,4 +74,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         userMapper.postEditInfo(user);
     }
+
+    @Override
+    public User getUser() {
+
+        return userMapper.getUser();
+    }
 }

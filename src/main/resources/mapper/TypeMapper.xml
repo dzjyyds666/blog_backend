@@ -4,18 +4,31 @@
     <update id="reduceTypeNumber">
         update blog2.type
         set blog_num = blog_num - 1
-        where id in (select type_id from blog2.btcontact where blog_id = #{id});
+        where type_id in (select type_id from blog2.btcontact where blog_id = #{id});
     </update>
 
     <select id="getTypeInfo" resultType="com.Aaron.entity.Type">
-        select * from blog2.type;
+        select type_id, type_name, blog_num, create_time, update_time from blog2.type order by blog_num desc;
+    </select>
+    <select id="selectIdByName" resultType="java.lang.Integer">
+        select type_id from blog2.type
+        where type_name = #{typeName};
+    </select>
+    <select id="getSearch" resultType="com.Aaron.entity.Type">
+        select * from blog2.type
+        where type_name like CONCAT('%',#{search},'%');
     </select>
     <insert id="getAddType">
         insert into blog2.type(type_name) value (#{typeName});
     </insert>
+    <update id="addTypeBlogNumber">
+        update blog2.type
+        set blog_num = blog_num + 1
+        where type_id = #{id};
+    </update>
     <update id="getChangeTypeName">
         update blog2.type
         set type_name = #{typeName}
-        where id = #{id};
+        where type_id = #{id};
     </update>
 </mapper>

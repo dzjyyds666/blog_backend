@@ -10,4 +10,8 @@
     <select id="getPassword" resultType="java.lang.String">
         select password from blog2.user where account = #{account};
     </select>
+    <select id="getUser" resultType="com.Aaron.entity.User">
+        select avatar,introduction,nickname from blog2.user
+        where id = 1;
+    </select>
 </mapper>

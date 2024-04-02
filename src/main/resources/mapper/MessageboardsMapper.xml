@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.mapper.MessageboardsMapper">
+    <insert id="postAddComment">
+        <choose>
+            <when test="avatar == null or avatar == ''">
+                insert into blog2.messageboards(nickname, email, comments_content) VALUE (#{nickname},#{email},#{commentsContent});
+            </when>
+            <otherwise>
+                insert into blog2.messageboards(nickname, email, avatar, comments_content) value (#{nickname},#{email},#{avatar},#{commentsContent});
+            </otherwise>
+        </choose>
+    </insert>
 
+    <select id="getComment" resultType="com.Aaron.entity.Messageboards">
+        select *
+        from blog2.messageboards
+        order by is_top desc, create_time desc;
+    </select>
+    <select id="getNewTime" resultType="java.time.LocalDateTime">
+        select MAX(create_time) from blog2.messageboards;
+    </select>
 </mapper>

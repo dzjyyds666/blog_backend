@@ -3,6 +3,8 @@ package com.Aaron.service;
 import com.Aaron.entity.Settings;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISettingsService extends IService<Settings> {
 
+    void postEdit(Settings settings);
+
+
+
+    String getContent(String name);
 }

@@ -1,7 +1,11 @@
 package com.Aaron.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
+import com.Aaron.entity.Settings;
+import com.Aaron.service.ISettingsService;
+import com.Aaron.utils.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 
 /**
  * <p>
@@ -11,8 +15,29 @@ import org.springframework.stereotype.Controller;
  * @author Aaron
  * @since 2024-03-23
  */
-@Controller
+@RestController
 @RequestMapping("/settings")
 public class SettingsController {
+
+    @Autowired
+    private ISettingsService settingsService;
+
+    @PostMapping("/edit")
+    public Result postEdit(@RequestBody Settings settings){
+
+        System.out.println(settings);
+
+        settingsService.postEdit(settings);
+
+        return Result.Success();
+    }
+
+
+    @GetMapping("/front/getContent")
+    public Result getContent(String name){
+
+        String content = settingsService.getContent(name);
+        return Result.Success("获取成功",content);
+    }
 
 }

@@ -75,4 +75,6 @@ public class Blog implements Serializable {
     private LocalDateTime updateTime;
 
     private List<Type> typeList;
+
+    private List<String> typeNameList;
 }

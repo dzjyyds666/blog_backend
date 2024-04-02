@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Aaron.mapper.CommentsMapper">
 
+    <insert id="postAddComment">
+        <choose>
+            <when test="avatar == null or avatar == ''">
+                insert into blog2.comments(nickname, email, comments_content, blog_id) VALUE (#{nickname},#{email},#{commentsContent},#{blogId});
+            </when>
+            <otherwise>
+                insert into blog2.comments(nickname, email, avatar, comments_content,blog_id) value (#{nickname},#{email},#{avatar},#{commentsContent},#{blogId});
+            </otherwise>
+        </choose>
+    </insert>
+    <select id="getComment" resultType="com.Aaron.entity.Comments">
+        select * from blog2.comments where blog_id = #{id} order by is_top desc,create_time desc;
+    </select>
 </mapper>

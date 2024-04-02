@@ -8,29 +8,68 @@
         <result property="tag" column="tag" />
         <result property="content" column="content" />
         <result property="firstImg" column="first_img" />
+        <result property="commentNum" column="comment_num" />
         <result property="createTime" column="create_time" />
         <result property="updateTime" column="update_time" />
         <result property="status" column="status" />
         <collection property="typeList"  ofType="com.Aaron.entity.Type">
-            <id property="id" column="type_id" />
+            <id property="typeId" column="type_id" />
             <result property="typeName" column="type_name" />
+            <result property="blogNum" column="blog_num" />
         </collection>
     </resultMap>
+    <insert id="postAddBlog">
+        insert into blog2.blog(title, tag, status, content, first_img) value (#{title},#{tag},#{status},#{content},#{firstImg});
+    </insert>
     <update id="editBlog">
         update blog2.blog
         set title = #{title},tag = #{tag},content = #{content},first_img = #{firstImg},status = #{status}
         where id = #{id};
     </update>
+    <update id="updateCommentNum">
+        update blog2.blog
+        set comment_num = comment_num + 1 where id = #{blogId}
+    </update>
 
     <select id="getBlogInfo" resultMap="adminBlogInfo">
-        select blog.id,title,tag,status,type_name,blog.create_time,blog.update_time
+        select blog.id,title,tag,status,type_name,blog.create_time,blog.update_time,content,first_img,type.type_id
         from blog2.blog,blog2.type,blog2.btcontact
-        where blog.id = btcontact.blog_id and type.id = btcontact.type_id
+        where blog.id = btcontact.blog_id and type.type_id = btcontact.type_id
         order by blog.create_time desc;
     </select>
     <select id="getgetBlogById" resultMap="adminBlogInfo">
         select blog.id,title,first_img,tag,type_name,content,status
         from blog2.blog,blog2.btcontact,blog2.type
-        where blog.id = btcontact.blog_id and type.id = btcontact.type_id and blog.id = #{id};
+        where blog.id = btcontact.blog_id and type.type_id = btcontact.type_id and blog.id = #{id};
     </select>
+    <select id="selectNewBlog" resultType="java.lang.Integer">
+        select id from blog2.blog
+        where title = #{title};
+    </select>
+    <select id="getBlogNum" resultType="java.lang.Integer">
+        select count(*) from blog2.blog where status = 1;
+    </select>
+    <select id="getSearch" resultType="com.Aaron.entity.Blog">
+        select * from blog2.blog
+        where title like CONCAT('%', #{search}, '%');
+    </select>
+    <select id="getYear" resultType="java.time.LocalDateTime">
+        select create_time from blog2.blog order by create_time desc;
+    </select>
+    <select id="getblog" resultType="com.Aaron.entity.Blog">
+        select id,title,tag,create_time from blog2.blog;
+    </select>
+    <select id="getBlogDetail" resultMap="adminBlogInfo">
+        select blog.id,title,tag,type.*,blog.create_time,blog.update_time,content,first_img,comment_num
+        from blog2.blog,blog2.type,blog2.btcontact
+        where blog_id = #{id} and blog.id = btcontact.blog_id and type.type_id = btcontact.type_id;
+    </select>
+    <select id="getByTypeId" resultMap="adminBlogInfo">
+        select blog.id,title,tag,status,type_name,blog.create_time,blog.update_time,content,first_img,type.type_id
+        from blog2.blog,blog2.type,blog2.btcontact
+        where blog.id = btcontact.blog_id and type.type_id = btcontact.type_id and type.type_id = #{id}
+        order by blog.create_time desc;
+    </select>
+
+
 </mapper>

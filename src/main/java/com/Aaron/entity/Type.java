@@ -28,8 +28,8 @@ public class Type implements Serializable {
     /**
      * 编号
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "type_id", type = IdType.AUTO)
+    private Integer typeId;
 
     /**
      * 分类名

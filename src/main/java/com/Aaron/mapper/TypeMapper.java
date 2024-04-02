@@ -22,4 +22,10 @@ public interface TypeMapper extends BaseMapper<Type> {
     void getChangeTypeName(Integer id, String typeName);
 
     void getAddType(String typeName);
+
+    Integer selectIdByName(String typeName);
+
+    void addTypeBlogNumber(Integer id);
+
+    List<Type> getSearch(String search);
 }

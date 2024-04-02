@@ -16,4 +16,6 @@ public interface UserMapper extends BaseMapper<User> {
     void postEditInfo(User user);
 
     String getPassword(String account);
+
+    User getUser();
 }

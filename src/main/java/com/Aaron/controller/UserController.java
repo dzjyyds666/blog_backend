@@ -62,5 +62,11 @@ public class UserController {
         userService.postEditInfo(user);
         return Result.Success("修改成功");
     }
+
+    @GetMapping("/front/getUser")
+    public Result getUser(){
+        User user = userService.getUser();
+        return Result.Success(user);
+    }
 }
 

@@ -3,6 +3,9 @@ package com.Aaron.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,6 +18,9 @@ import java.time.LocalDateTime;
  * @author Aaron
  * @since 2024-03-23
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Messageboards implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,72 +62,5 @@ public class Messageboards implements Serializable {
      */
     private Byte isTop;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getCommentsContent() {
-        return commentsContent;
-    }
-
-    public void setCommentsContent(String commentsContent) {
-        this.commentsContent = commentsContent;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public Byte getIsTop() {
-        return isTop;
-    }
-
-    public void setIsTop(Byte isTop) {
-        this.isTop = isTop;
-    }
-
-    @Override
-    public String toString() {
-        return "Messageboards{" +
-            "id = " + id +
-            ", nickname = " + nickname +
-            ", email = " + email +
-            ", avatar = " + avatar +
-            ", commentsContent = " + commentsContent +
-            ", createTime = " + createTime +
-            ", isTop = " + isTop +
-        "}";
-    }
 }

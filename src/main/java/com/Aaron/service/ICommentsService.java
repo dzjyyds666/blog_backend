@@ -3,6 +3,8 @@ package com.Aaron.service;
 import com.Aaron.entity.Comments;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 评论表 服务类
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICommentsService extends IService<Comments> {
 
+    String postAddComment(Comments comments);
+
+    List<Comments> getComment(int  id);
 }

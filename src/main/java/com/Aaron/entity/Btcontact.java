@@ -2,6 +2,10 @@ package com.Aaron.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -12,6 +16,9 @@ import java.io.Serializable;
  * @author Aaron
  * @since 2024-03-23
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Btcontact implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,37 +29,4 @@ public class Btcontact implements Serializable {
     private Integer blogId;
 
     private Integer typeId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getBlogId() {
-        return blogId;
-    }
-
-    public void setBlogId(Integer blogId) {
-        this.blogId = blogId;
-    }
-
-    public Integer getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
-
-    @Override
-    public String toString() {
-        return "Btcontact{" +
-            "id = " + id +
-            ", blogId = " + blogId +
-            ", typeId = " + typeId +
-        "}";
-    }
 }

@@ -5,7 +5,7 @@ import com.Aaron.service.ITypeService;
 import com.Aaron.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
+
 
 import java.util.List;
 
@@ -62,5 +62,29 @@ public class TypeController {
             return Result.fail(201,message);
         }
         return Result.Success(200,message,null);
+    }
+
+
+    @GetMapping("/front/search")
+    public Result getSearch(String search){
+        List<Type> list = typeService.getSearch(search);
+        if(list.isEmpty()){
+            return Result.fail(201,"分类没有匹配项");
+        }
+        return Result.Success("分类查询成功",list);
+    }
+
+
+    @GetMapping("/front/getType")
+    public Result getFrontType(){
+        List<Type> list = typeService.getTypeInfo();
+        return Result.Success(list);
+    }
+
+    @GetMapping("/front/getByTypeId")
+    public Result getTypeById(Integer id){
+        Type type = typeService.getTYpeById(id);
+
+        return Result.Success(type);
     }
 }

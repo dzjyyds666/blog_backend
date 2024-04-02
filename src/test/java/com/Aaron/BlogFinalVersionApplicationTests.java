@@ -1,17 +1,22 @@
 package com.Aaron;
 
+import com.Aaron.mapper.BlogMapper;
 import io.jsonwebtoken.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.DigestUtils;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 class BlogFinalVersionApplicationTests {
 
-
+    @Autowired
+    private BlogMapper blogMapper;
 
     @Test
     void contextLoads() {
@@ -69,8 +74,19 @@ class BlogFinalVersionApplicationTests {
         } catch (Exception e) {
             System.out.println("token过期，请重新登录");
         }
-
-
     }
+
+    @Test
+    void getYear(){
+        List<LocalDateTime> year = blogMapper.getYear();
+        List<Integer> list = new ArrayList<>();
+        for(LocalDateTime time:year){
+            if(!list.contains(time.getYear())){
+                list.add(time.getYear());
+            }
+        }
+        System.out.println(list);
+    }
+
 
 }

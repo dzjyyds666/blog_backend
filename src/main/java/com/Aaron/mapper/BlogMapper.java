@@ -3,6 +3,9 @@ package com.Aaron.mapper;
 import com.Aaron.entity.Blog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,4 +25,24 @@ public interface BlogMapper extends BaseMapper<Blog> {
     Blog getgetBlogById(Integer id);
 
 
+    void postAddBlog(Blog blog);
+
+    Integer selectNewBlog(String title);
+
+
+    Integer getBlogNum();
+
+    List<Blog> getSearch(String search);
+
+
+    List<LocalDateTime> getYear();
+
+    List<Blog> getblog();
+
+    Blog getBlogDetail(Integer id);
+
+    void updateCommentNum(Integer blogId);
+
+    List<Blog> getByTypeId(Integer id);
 }
+
