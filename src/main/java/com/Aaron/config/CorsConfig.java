@@ -14,7 +14,8 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:9111/"); // 允许所有来源
+//        config.addAllowedOrigin("http://localhost:8085/"); // 允许所有来源
+        config.addAllowedOrigin("http://129.204.86.159"); // 允许所有来源
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

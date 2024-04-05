@@ -12,6 +12,9 @@
             </otherwise>
         </choose>
     </insert>
+    <delete id="deleteComments">
+        delete from blog2.comments where blog_id = #{id};
+    </delete>
     <select id="getComment" resultType="com.Aaron.entity.Comments">
         select * from blog2.comments where blog_id = #{id} order by is_top desc,create_time desc;
     </select>

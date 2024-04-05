@@ -4,6 +4,7 @@ import com.Aaron.entity.Blog;
 import com.Aaron.entity.Btcontact;
 import com.Aaron.mapper.BlogMapper;
 import com.Aaron.mapper.BtcontactMapper;
+import com.Aaron.mapper.CommentsMapper;
 import com.Aaron.mapper.TypeMapper;
 import com.Aaron.service.IBlogService;
 import com.Aaron.utils.Year;
@@ -34,6 +35,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     @Autowired
     private BtcontactMapper btcontactMapper;
 
+    @Autowired
+    private CommentsMapper commentsMapper;
+
     @Override
     public List<Blog> getBlogInfo() {
         return blogMapper.getBlogInfo();
@@ -48,6 +52,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
                 typeMapper.reduceTypeNumber(blog.getId());
                 //删除btconnect中blog对应的type
                 btcontactMapper.deleteByBlogId(blog.getId());
+                //删除评论表中对应的评论
+                commentsMapper.deleteComments(blog.getId());
+
                 blogMapper.deleteById(blog.getId());
             }
             return "删除成功";

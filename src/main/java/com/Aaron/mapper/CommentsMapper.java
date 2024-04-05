@@ -18,4 +18,6 @@ public interface CommentsMapper extends BaseMapper<Comments> {
     void postAddComment(Comments comments);
 
     List<Comments> getComment(int id);
+
+    void deleteComments(Integer id);
 }

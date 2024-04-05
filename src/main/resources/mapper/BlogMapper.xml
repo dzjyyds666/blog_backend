@@ -60,7 +60,7 @@
         select id,title,tag,create_time from blog2.blog;
     </select>
     <select id="getBlogDetail" resultMap="adminBlogInfo">
-        select blog.id,title,tag,type.*,blog.create_time,blog.update_time,content,first_img,comment_num
+        select blog.id,title,tag,type.type_id,type_name,blog_num,blog.create_time,blog.update_time,content,first_img,comment_num
         from blog2.blog,blog2.type,blog2.btcontact
         where blog_id = #{id} and blog.id = btcontact.blog_id and type.type_id = btcontact.type_id;
     </select>

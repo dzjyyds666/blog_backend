@@ -1,5 +1,6 @@
 server:
-  port: 8081
+#  port: 8081  #dev
+  port: 8090  # Releases
 
 spring:
   datasource:

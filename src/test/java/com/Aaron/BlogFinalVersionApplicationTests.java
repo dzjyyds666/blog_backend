@@ -1,10 +1,12 @@
 package com.Aaron;
 
+import com.Aaron.controller.BlogController;
 import com.Aaron.mapper.BlogMapper;
 import io.jsonwebtoken.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
@@ -78,14 +80,22 @@ class BlogFinalVersionApplicationTests {
 
     @Test
     void getYear(){
-        List<LocalDateTime> year = blogMapper.getYear();
-        List<Integer> list = new ArrayList<>();
-        for(LocalDateTime time:year){
-            if(!list.contains(time.getYear())){
-                list.add(time.getYear());
-            }
-        }
-        System.out.println(list);
+        System.out.println(blogMapper.getBlogDetail(23));
+        System.out.println(blogMapper.getBlogInfo());
+    }
+
+
+    @Autowired
+    private ApplicationContext applicationContext;//获取ioc容器对象
+
+    @Test
+    void getIoc(){
+        //根据对象名获取ioc对象
+        System.out.println(applicationContext.getBean("blogController"));//未指定对象名时，默认为类名首字母小写
+        //根据对象类型获取对象
+        System.out.println(applicationContext.getBean(BlogController.class));
+        //根据对象类型和对象名获取对象
+        System.out.println(applicationContext.getBean("blogController", BlogController.class));
     }
 
 
