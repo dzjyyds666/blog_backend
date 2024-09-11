@@ -130,7 +130,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     public List<Blog> getBlogInfoPage(Integer offset, Integer limit) {
         List<Blog> list1 = new ArrayList<>();
         try {
-            List<Blog> list = blogMapper.getBlogInfo();
+            List<Blog> list = blogMapper.getFrontBlogInfo();
             int start = (offset - 1) * limit;
             for (int i = 0; i < start + limit; i++) {
                 if (i >= start) {
@@ -170,6 +170,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         Comparator<Integer> reverseOrder = Collections.reverseOrder();
         list.sort(reverseOrder);
         List<Year> list1 = new ArrayList<>();
+
 
         for (Integer y : list) {
             int number = 0;

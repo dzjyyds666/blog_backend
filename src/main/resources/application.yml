@@ -1,20 +1,26 @@
 server:
-#  port: 8081  #dev
-  port: 8090  # Releases
+  port: ${blog.port}
+
+  servlet:
+    context-path: /api
+
 
 spring:
   datasource:
-    username: root
-    password: rootroot
-    url: jdbc:mysql://localhost:3306/blog2?&characterEncoding=utf-8&userSSL=false
+    username: ${blog.mysql.username}
+    password: ${blog.mysql.password}
+    url: jdbc:mysql://${host}:3306/blog2?&characterEncoding=utf-8&userSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:
-    host: localhost
+    host: ${host}
     port: 6379
     password:
+
+  profiles:
+    active: dev
 
 
 logging:
   level:
-    com.duzjstu: debug
+    com.Aaron: debug

@@ -44,5 +44,7 @@ public interface BlogMapper extends BaseMapper<Blog> {
     void updateCommentNum(Integer blogId);
 
     List<Blog> getByTypeId(Integer id);
+
+    List<Blog> getFrontBlogInfo();
 }
 

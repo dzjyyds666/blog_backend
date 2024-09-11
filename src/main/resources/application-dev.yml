@@ -1,0 +1,8 @@
+blog:
+  mysql:
+    username: root
+    password: root
+
+  port: 8080
+
+host: 192.168.62.130

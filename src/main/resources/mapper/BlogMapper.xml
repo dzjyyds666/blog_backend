@@ -37,6 +37,12 @@
         where blog.id = btcontact.blog_id and type.type_id = btcontact.type_id
         order by blog.create_time desc;
     </select>
+    <select id="getFrontBlogInfo" resultMap="adminBlogInfo">
+        select blog.id,title,tag,status,type_name,blog.create_time,blog.update_time,content,first_img,type.type_id
+        from blog2.blog,blog2.type,blog2.btcontact
+        where blog.id = btcontact.blog_id and type.type_id = btcontact.type_id and blog.status = 1
+        order by blog.create_time desc;
+    </select>
     <select id="getgetBlogById" resultMap="adminBlogInfo">
         select blog.id,title,first_img,tag,type_name,content,status
         from blog2.blog,blog2.btcontact,blog2.type
@@ -51,13 +57,13 @@
     </select>
     <select id="getSearch" resultType="com.Aaron.entity.Blog">
         select * from blog2.blog
-        where title like CONCAT('%', #{search}, '%');
+        where title like CONCAT('%', #{search}, '%') and status = 1;
     </select>
     <select id="getYear" resultType="java.time.LocalDateTime">
-        select create_time from blog2.blog order by create_time desc;
+        select create_time from blog2.blog order by create_time asc ;
     </select>
     <select id="getblog" resultType="com.Aaron.entity.Blog">
-        select id,title,tag,create_time from blog2.blog;
+        select id,title,tag,create_time from blog2.blog order by create_time desc;
     </select>
     <select id="getBlogDetail" resultMap="adminBlogInfo">
         select blog.id,title,tag,type.type_id,type_name,blog_num,blog.create_time,blog.update_time,content,first_img,comment_num
